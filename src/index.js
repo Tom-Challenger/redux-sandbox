@@ -1,52 +1,35 @@
-import { createStore } from 'redux'
+import { createStore, bindActionCreators } from 'redux'
 
-//Начальное значение можно передавать в пераметре по-умолчанию
-//const initialState = 0
+import reducer from './reducer'
+import * as actions from './actions'
 
-// Если значение поля .type не удалось распознать,
-// то state возвращается неизменно
+const store = createStore(reducer)
+const { dispatch } = store
 
-// Если state изначально не задан,
-// то он определяется значением по-умолчанию
+// Реализация логики связывания функции создающей action и механизма отправки события dispatch()
+// const bindActionCreator = (creator, dispatch) => (...args) => {
+//   dispatch(creator(...args))
+// }
 
-const reduser = (state = 0, action) => {
-  switch (action.type) {
-    case 'INC':
-      return state + 1
-    case 'DEC':
-      return state - 1
-    case 'RND':
-      return state + action.payload
-
-    default:
-      return state
-  }
-}
-
-const store = createStore(reduser)
-
-const inc = () => ( { type: 'INC' } )
-const dec = () => ( { type: 'DEC' } )
-const rnd = (payload) =>  ( { type: 'RND', payload } )
+/*
+Аргумент actions - является объектом, 
+где ключ - это имя обернутой функции, 
+а значение - это функция-action (функция возвращающая объект action)*/
+const { inc, dec, rnd } = bindActionCreators(actions, dispatch)
 
 document
   .getElementById('inc')
-  .addEventListener('click', () => {
-    store.dispatch(inc())
-  })
-
+  .addEventListener('click', inc)
 
 document
   .getElementById('dec')
-  .addEventListener('click', () => {
-    store.dispatch(dec())
-  })
+  .addEventListener('click', dec)
 
 document
   .getElementById('rnd')
   .addEventListener('click', () => {
     const payload = Math.floor(Math.random()*10)
-    store.dispatch(rnd(payload))
+    rnd(payload)
   })
 
 const update = () => {
