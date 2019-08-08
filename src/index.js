@@ -1,3 +1,5 @@
+import { createStore } from 'redux'
+
 //Начальное значение можно передавать в пераметре по-умолчанию
 //const initialState = 0
 
@@ -17,11 +19,10 @@ const reduser = (state = 0, action) => {
   }
 }
 
-let state = reduser( undefined, {})
-console.log(state)
+const store = createStore(reduser)
+store.subscribe(() => {
+  console.log(store.getState())
+})
 
-state = reduser(state, {type: 'INC'})
-console.log(state)
-
-state = reduser(state, {type: 'INC'})
-console.log(state)
+store.dispatch({type: 'INC'})
+store.dispatch({type: 'INC'})
