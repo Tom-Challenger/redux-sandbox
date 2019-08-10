@@ -8,7 +8,7 @@
 // Если state изначально не задан,
 // то он определяется значением по-умолчанию
 
-const reducer = (state = 0, action) => {
+const reducer = (state = 17, action) => {
   switch (action.type) {
     case 'INC':
       return state + 1
