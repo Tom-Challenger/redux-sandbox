@@ -20,19 +20,17 @@ const mapStateToProps = (state) => {
 	}
 }
 
-const mapDispatchToProps = (dispatch) => {
-
-	const { inc, dec, rnd } = bindActionCreators(actions, dispatch)
-
-	return {
-		inc,
-		dec,
-		rnd: () => {
-			const randomValue = Math.floor(Math.random()*10)
-			rnd(randomValue)
-		} 
-	}
-}
+// const mapDispatchToProps = (dispatch) => {
+// 	const { inc, dec, rnd } = bindActionCreators(actions, dispatch)
+// 	return {
+// 		inc,
+// 		dec,
+// 		rnd: () => {
+// 			const randomValue = 
+// 			rnd(randomValue)
+// 		} 
+// 	}
+// }
 
 // connect - это HOC,
 // connect - внутри себя создает новый компонент
@@ -41,4 +39,4 @@ const mapDispatchToProps = (dispatch) => {
 // для того чтобы получить значения из stare и передать в наш компонент
 // мы используем функцию которая называется mapStateToProps
 // В итоге значение counter из state передастья под именем counter в компонент Counter
-export default connect(mapStateToProps, mapDispatchToProps)(Counter)
+export default connect(mapStateToProps, actions)(Counter)
